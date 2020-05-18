@@ -1,0 +1,183 @@
+<!doctype html>
+
+<html>
+<head>
+    <style type = "text/css">
+        .sidenav {
+            height:100%;
+            width:160px;
+            position: fixed;
+            z-index:1;
+            top:0;
+            Left:0;
+            background-color:#111;
+            overflow-x:hidden;
+            padding-top:20px;
+            text-align: justify;
+        }
+
+        .sidenav a {
+            padding:6px 8px 6px 16px;
+            text-decoration:none;
+            font-size:30px;
+            color:#818181;
+            display:block;
+        }
+
+        img {
+            display: block;
+        }
+
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            margin-Top:40px;
+            margin-Left:200px;
+            padding: 0px 10px;
+        }
+        .main{
+            margin-Top:20px;
+            margin-Left:180px;
+            padding: 0px 10px;
+        }
+
+        table, th, td {
+            padding: 10px;
+            border: 1px solid black;
+        }
+        tr:hover {background-color: #f5f5f5;}
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <head lang="en">
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <Title>Search</Title>
+</head>
+<body>
+    <div class = "sidenav">
+        <a href = "/">Home</a>
+
+        {% if user.is_authenticated %}
+
+            {% if request.user.is_superuser %}
+                <a href = "/search/upload">Upload</a>
+
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+
+    <div class = "main">
+
+    </div>
+
+
+    <table>
+
+        {% if user.is_authenticated %}
+            {% if request.user.is_superuser %}
+                <thead>
+                    <tr style="text-align:center">
+                        <th style="width:210px; font-size:160%">IMAGE</th>
+                        <th style="width:210px; font-size:160%">ID</th>
+                        <th style="width:210px; font-size:160%">NAME</th>
+                        <th style="width:210px; font-size:160%">DESCRIPTION</th>
+                        <th style="width:210px; font-size:160%">CAPACITY</th>
+                        <th style="width:210px; font-size:160%">CONDITIONS</th>
+                        <th style="width:210px; font-size:160%">UPDATE</th>
+
+                        <th style="width:210px; font-size:160%">DELETE</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ad in Ads %}
+                        {% if "" in ad.name %}
+
+                            <tr style="text-align:center">
+                                <td>
+                                    {% if ad.image %}
+                                        <img src="{{ ad.image.url }}" alt = "{{ ad.name }}" style="width:200px;height:111px;">
+                                    {% endif%}
+                                </td>
+                                <td>{{ ad.id }}</td>
+                                <td>{{ ad.name }}</td>
+                                <td>{{ ad.description }}</td>
+                                <td>{{ ad.capacity }}</td>
+                                <td>{{ ad.conditions }}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-info" href = "{% url 'update_ad' ad.pk%}">
+                                    Update
+                                    </a>
+                                </td>
+                                <td>
+                                    <form method="post" action="{% url 'delete_ad' ad.pk %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+            {% if not request.user.is_superuser %}
+                <thead>
+                    <tr style="text-align:center">
+                        <th style="width:280px; font-size:160%">IMAGE</th>
+                        <th style="width:280px; font-size:160%">ID</th>
+                        <th style="width:280px; font-size:160%">NAME</th>
+                        <th style="width:280px; font-size:160%">DESCRIPTION</th>
+                        <th style="width:280px; font-size:160%">CAPACITY</th>
+                        <th style="width:280px; font-size:160%">CONDITIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ad in Ads %}
+                        {% if "" in ad.name %}
+
+                            <tr style="text-align:center">
+                                <td>
+                                    {% if ad.image %}
+                                        <img src="{{ ad.image.url }}" alt = "{{ ad.name }}" style="width:200px;height:111px;">
+                                    {% endif%}
+                                </td>
+                                <td>{{ ad.id }}</td>
+                                <td>{{ ad.name }}</td>
+                                <td>{{ ad.description }}</td>
+                                <td>{{ ad.capacity }}</td>
+                                <td>{{ ad.conditions }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            {% endif %}
+
+
+
+        {% endif %}
+
+
+
+
+
+    </table>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
