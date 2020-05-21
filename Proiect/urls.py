@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
 from register import views as v
 from search import views as s
+from feedback import views as f
+
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
@@ -30,6 +33,7 @@ urlpatterns = [
     path("search/<int:pk>/", s.delete_ad, name = "delete_ad"),
     path('', include("main.urls")),
     path('', include("django.contrib.auth.urls")),
+    path('feedback/', f.feedback_page, name = "feedback")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'register.apps.RegisterConfig',
     'search.apps.SearchConfig',
+    'feedback.apps.FeedbackConfig',
     "crispy_forms",
 
 ]

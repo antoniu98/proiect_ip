@@ -1,0 +1,122 @@
+{% load tawkto_tags %}
+<!doctype html>
+
+<html>
+<head>
+    <style type = "text/css">
+        .sidenav {
+            height:100%;
+            width:160px;
+            position: fixed;
+            z-index:1;
+            top:0;
+            Left:0;
+            background-color:#111;
+            overflow-x:hidden;
+            padding-top:20px;
+            text-align: justify;
+        }
+
+        .sidenav a {
+            padding:6px 8px 6px 16px;
+            text-decoration:none;
+            font-size:30px;
+            color:#818181;
+            display:block;
+        }
+
+        img {
+            display: block;
+        }
+
+        table {
+            border-collapse: collapse;
+            text-align: center;
+            margin-Top:40px;
+            margin-Left:200px;
+            padding: 0px 10px;
+        }
+        .main{
+            margin-Top:20px;
+            margin-Left:180px;
+            padding: 0px 10px;
+        }
+
+        table, th, td {
+            padding: 10px;
+            border: 1px solid black;
+        }
+        tr:hover {background-color: #f5f5f5;}
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <head lang="en">
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <Title>Search</Title>
+</head>
+<body>
+    <div class = "sidenav">
+        <a href = "/">Home</a>
+
+        {% if user.is_authenticated %}
+        <a href = "/feedback">Feedback</a>
+            {% if request.user.is_superuser %}
+                <a href = "/search/upload">Upload</a>
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+
+    <div class = "main">
+        {% if user.is_authenticated %}
+            <!-- {% if not request.user.is_superuser %}-->
+            <form method="POST">
+                {% csrf_token %}
+                {{ feedback_form.form }}
+            <button type="submit" class="btn btn-danger btn-sm"> Feedback </button>
+            </form>
+            <!-- {% endif %} -->
+
+            {% if request.user.is_superuser %}
+                <table>
+                <thead>
+                    <tr style="text-align:center">
+                        <th style="width:210px; font-size:160%">RATING</th>
+                        <th style="width:210px; font-size:160%">TITLE</th>
+                        <th style="width:210px; font-size:160%">DESCRIPTION</th>
+                    </tr>
+                </thead>
+                {% for f in feedbacks %}
+
+                    <tr style="text-align:center">
+                        <td>{{ f.rating }}</td>
+                        <td>{{ f.title }}</td>
+                        <td>{{ f.description }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    {% tawkto_script %}
+
+</body>
+</html>
