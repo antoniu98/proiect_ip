@@ -8,6 +8,7 @@ class Advertisment(models.Model):
     capacity = models.IntegerField(blank = True, null = True)
     conditions = models.CharField(max_length = 100, blank = True)
     image = models.ImageField(upload_to = 'ads/imgs/', null = True, blank = True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.name

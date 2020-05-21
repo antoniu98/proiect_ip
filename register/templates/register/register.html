@@ -28,6 +28,10 @@
             margin-Left:180px;
             padding: 0px 10px;
         }
+
+        .error{
+            background-color: red;
+        }
     </style>
 
     <meta charset="utf-8">
@@ -45,6 +49,7 @@
     {% load crispy_forms_tags %}
 
     <div class = "main">
+        <h1 class="error">{{ message }}</h1>
         <form method="POST" class = "form-group">
             {% csrf_token %}
             {{ form|crispy  }}

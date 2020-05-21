@@ -4,12 +4,16 @@ from django.core.files.storage import FileSystemStorage
 
 from .forms import AdForm
 from .models import Advertisment
+from .filters import AdvertismentFilter
 
 def search(response):
-    Ads = Advertisment.objects.all()
-    return render(response, "search.html", {
-        'Ads': Ads
-    })
+    ads = Advertisment.objects.all()
+    ads_count = ads.count()
+
+    ads_filter = AdvertismentFilter(response.GET, queryset = ads)
+    orders = ads_filter.qs
+
+    return render(response, "search.html", {'Ads': orders, 'filter' : ads_filter})
 
 def upload_ad(response):
     if response.method == 'POST':

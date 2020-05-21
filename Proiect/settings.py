@@ -27,10 +27,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TAWKTO_ID_SITE='5ec54bd78ee2956d73a300b6'
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_filters',
+    'tawkto',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
