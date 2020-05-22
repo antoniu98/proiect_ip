@@ -8,8 +8,14 @@ def feedback_page(response):
         form = FeedbackForm(response.POST)
         if form.is_valid():
             form.save()
-            return redirect('')
+            return redirect('/')
+        return render(response, 'feedback.html', {
+        'feedback_form': FeedbackForm(),
+        'feedbacks' :  Feedback.objects.all(),
+        'message' : 'Maybe bad rating :)'
+        })
     return render(response, 'feedback.html', {
         'feedback_form': FeedbackForm(),
-        'feedbacks' :  Feedback.objects.all()
+        'feedbacks' :  Feedback.objects.all(),
+        'message' : 'Please : rate from 1-5 and specify your accomodation'
     })

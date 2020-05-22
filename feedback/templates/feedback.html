@@ -82,7 +82,10 @@
             <!-- {% if not request.user.is_superuser %}-->
             <form method="POST">
                 {% csrf_token %}
-                {{ feedback_form.form }}
+                <a>{{message}}</a>
+                <table>
+                    {{feedback_form.as_table}}
+                 </table>
             <button type="submit" class="btn btn-danger btn-sm"> Feedback </button>
             </form>
             <!-- {% endif %} -->
